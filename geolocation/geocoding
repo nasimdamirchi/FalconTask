@@ -1,0 +1,13 @@
+from geopy.geocoders import Nominatim
+
+
+def geocode(address):
+    geo_locator = Nominatim(user_agent='nasim.damirchli89@gmail.com')
+    location = geo_locator.geocode(address)
+    return location.latitude, location.langtitude
+
+
+def reverse_geocode(lat, lon):
+    geo_locator = Nominatim(user_agent='nasim.damirchli89@gmail.com')
+    location = geo_locator.reverse((str(lat), str(lon)))
+    return location.address
