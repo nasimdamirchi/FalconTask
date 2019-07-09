@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/geocode', methods=['POST'])
 def start_geocode():
-    address = request.get_json(force=True).get('address')
+    address = request.get_json(force=True).get('address', '')
     try:
         result = geocode.delay(address)
         return result.id, http.HTTPStatus.ACCEPTED
@@ -20,8 +20,8 @@ def start_geocode():
 
 @app.route('/reverse', methods=['POST'])
 def start_reverse_geocode():
-    lat = request.get_json(force=True).get('lat')
-    lon = request.get_json(force=True).get('lon')
+    lat = request.get_json(force=True).get('lat', '')
+    lon = request.get_json(force=True).get('lon', '')
     try:
         result = reverse_geocode.delay(lat, lon)
         return result.id, http.HTTPStatus.ACCEPTED

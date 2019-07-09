@@ -13,7 +13,7 @@ def geocode(address):
     result = []
     if locations:
         for location in locations:
-            result.append({"address": location.address, "lat": location.latitude, "long": location.longitude})
+            result.append({"address": location.address, "lat": location.latitude, "lon": location.longitude})
     return result
 
 
@@ -24,5 +24,5 @@ def reverse_geocode(lat, lon):
     result = []
     if locations:
         for location in locations:
-            result.append({"address": location.address, "lat": location.latitude, "long": location.longitude})
+            result.append({"address": location.address, "lat": location.latitude, "lon": location.longitude})
     return result
