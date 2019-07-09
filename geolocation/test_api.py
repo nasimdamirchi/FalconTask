@@ -26,24 +26,24 @@ class TestGeoLocation(unittest.TestCase):
         self.address = "Denmark"
 
     def test_geocode(self):
-        response = self.app.post('/geocode', data=json.dumps(dict(address=DTU_ADDRESS)))
+        response = self.app.post('/geolocation/geocode', data=json.dumps(dict(address=DTU_ADDRESS)))
         self.assertEqual(response.status_code, 202)
 
     def test_reverse(self):
-        response = self.app.post('/reverse', data=json.dumps(dict(lat=DTU_LAT_1, lon=DTU_LON_1)))
+        response = self.app.post('/geolocation/reverse', data=json.dumps(dict(lat=DTU_LAT_1, lon=DTU_LON_1)))
         self.assertEqual(response.status_code, 202)
 
     def test_geocode_result(self):
-        create_response = self.app.post('/geocode', data=json.dumps(dict(address=DTU_ADDRESS)))
+        create_response = self.app.post('/geolocation/geocode', data=json.dumps(dict(address=DTU_ADDRESS)))
         time.sleep(2)
-        answer_response = self.app.get('/geo_result/{}'.format(create_response.data.decode('utf8')))
+        answer_response = self.app.get('/geolocation/geo_result/{}'.format(create_response.data.decode('utf8')))
         self.assertEqual(answer_response.status_code, 200)
         self.assertDictEqual(json.loads(answer_response.data.decode('utf8')), DTU_RESPONSE_GEOCODE)
 
     def test_reverse_result(self):
-        create_response = self.app.post('/reverse', data=json.dumps(dict(lat=DTU_LAT_1, lon=DTU_LON_1)))
+        create_response = self.app.post('/geolocation/reverse', data=json.dumps(dict(lat=DTU_LAT_1, lon=DTU_LON_1)))
         time.sleep(2)
-        answer_response = self.app.get('/geo_result/{}'.format(create_response.data.decode('utf8')))
+        answer_response = self.app.get('/geolocation/geo_result/{}'.format(create_response.data.decode('utf8')))
         self.assertEqual(answer_response.status_code, 200)
         self.assertDictEqual(json.loads(answer_response.data.decode('utf8')), DTU_RESPONSE_REVERSE)
 

@@ -1,14 +1,15 @@
 from celery import Celery
 
 from geopy.geocoders import Nominatim
+import config
 
-celery = Celery('celery_config', broker='redis://redis:6379/0', backend='redis://redis:6379/1',
+celery = Celery('celery_config', broker=config.REDIS_BROKER_URL, backend=config.REDIS_BACKEND_URL,
                 include=['api', ], )
 
 
 @celery.task()
 def geocode(address):
-    geo_locator = Nominatim(user_agent='nasim.damirchli89@gmail.com')
+    geo_locator = Nominatim(user_agent=config.GEOPY_USER_AGENT)
     locations = geo_locator.geocode(address, exactly_one=False)
     result = []
     if locations:
@@ -19,7 +20,7 @@ def geocode(address):
 
 @celery.task()
 def reverse_geocode(lat, lon):
-    geo_locator = Nominatim(user_agent='nasim.damirchli89@gmail.com')
+    geo_locator = Nominatim(user_agent=config.GEOPY_USER_AGENT)
     locations = geo_locator.reverse((str(lat), str(lon)), exactly_one=False)
     result = []
     if locations:
