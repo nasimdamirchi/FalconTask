@@ -2,7 +2,7 @@ from celery import Celery
 
 from geopy.geocoders import Nominatim
 
-celery = Celery('celery_config', broker='redis://localhost:6379/0', backend='redis://localhost:6379/1',
+celery = Celery('celery_config', broker='redis://redis:6379/0', backend='redis://redis:6379/1',
                 include=['api', ], )
 
 

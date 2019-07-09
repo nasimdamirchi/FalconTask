@@ -1,0 +1,31 @@
+version: '2'
+
+services:
+    api:
+        container_name: api_falcon
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8000:8000
+        links:
+            - redis
+
+    redis:
+        container_name: redis_falcon
+        image: redis:latest
+
+    celery:
+        container_name: celery_falcon
+        build: .
+        command: celery -l info -A celery_config worker
+
+    flower:
+        container_name: flower_falcon
+        image: mher/flower
+        command: ["flower", "--broker=redis://redis:6379/0", "--port=5555"]
+        ports:
+          - 5555:5555
+        links:
+          - celery
