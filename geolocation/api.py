@@ -7,6 +7,10 @@ from flasgger import Swagger
 from celery_config import geocode, reverse_geocode, celery
 
 app = Flask(__name__)
+app.config['SWAGGER'] = {
+    'title': 'GeoLocation API',
+    'version': "1.0"
+}
 Swagger(app)
 
 
