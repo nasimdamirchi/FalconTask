@@ -125,11 +125,16 @@ def geocode_result(job_id):
                 result:
                   type: object
                   description: address
+          404:
+            description: Job NOT found for requested id
         """
 
     job = celery.AsyncResult(job_id)
-    response_obj = {'status': job.state, 'result': job.result}
-    return json.dumps(response_obj, ensure_ascii=False), http.HTTPStatus.OK
+    if job.state == 'PENDING':
+        return '', http.HTTPStatus.NOT_FOUND
+    else:
+        response_obj = {'status': job.state, 'result': job.result}
+        return json.dumps(response_obj, ensure_ascii=False), http.HTTPStatus.OK
 
 
 if __name__ == '__main__':
