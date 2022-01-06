@@ -1,6 +1,6 @@
 geopy==1.20.0
 flask==1.0.3
-celery==4.3.0
+celery==5.2.2
 gunicorn==19.9.0
 redis==3.2.1
 flasgger
